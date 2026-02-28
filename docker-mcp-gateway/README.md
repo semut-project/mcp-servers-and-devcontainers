@@ -18,24 +18,96 @@ Current setup in `compose.yaml`:
 
 ## How
 
-### 1) Up the gateway
+### 1) Clone this repo
+```bash
+git clone https://github.com/semut-project/mcp-servers-and-devcontainers
+cd mcp-servers-and-devcontainers/docker-mcp-gateway
+```
+
+### 2) Activate MCP Gateway
 ```bash
 docker compose up -d
 ```
 
-### 2) Check status
+Check status:
 ```bash
 docker compose ps
 ```
 
-### 3) See logs
+Check startup logs:
 ```bash
-docker compose logs -f mcp-gateway
+docker compose logs --tail=100 mcp-gateway
 ```
 
-### 4) Down the gateway
+### 3) Setup Codex client
+Install Codex CLI (choose one):
+
+Option A (npm):
 ```bash
-docker compose down
+npm install -g @openai/codex
+```
+
+Option B (Homebrew):
+```bash
+brew install codex
+```
+
+Login:
+```bash
+codex
+```
+Then sign in with ChatGPT account or API key when prompted.
+
+Connect Codex client to MCP Gateway:
+```bash
+codex mcp list
+codex mcp add gateway --url http://localhost:8090
+```
+
+Create global links for all local gateway skills.
+
+WSL/Linux:
+```bash
+mkdir -p ~/.codex/skills
+for d in .codex/skills/*; do
+  [ -d "$d" ] || continue
+  ln -sfn "$(pwd)/$d" ~/.codex/skills/"$(basename "$d")"
+done
+```
+
+Windows (PowerShell):
+```powershell
+$repoSkills = Join-Path (Get-Location) ".codex\skills"
+$globalSkills = Join-Path $HOME ".codex\skills"
+New-Item -ItemType Directory -Force -Path $globalSkills | Out-Null
+Get-ChildItem $repoSkills -Directory | ForEach-Object {
+  $target = $_.FullName
+  $link = Join-Path $globalSkills $_.Name
+  if (Test-Path $link) { Remove-Item $link -Force }
+  New-Item -ItemType SymbolicLink -Path $link -Target $target | Out-Null
+}
+```
+
+### 4) Verification
+
+List all MCP Tools available in MCP Gateway.
+
+```bash
+codex "list all mcp tools awailable in MCP Gateway"
+```
+
+
+This prompt will use either puppeteer or Playwright.
+
+```bash
+codex "Open https://hub.docker.com/ and find first 5 mcp server and give me description each server."
+```
+
+This prompt will use Paper Search
+
+```bash
+codex "find 3 research paper about Tiny Recursive Model and give me summarize of each paper"
+
 ```
 
 ## Manage Servers (Gateway)
@@ -70,7 +142,7 @@ Example:
 docker compose up -d
 ```
 
-## Setup Codex Using CLI
+## Setup Codex Using CLI (Optional Details)
 
 ### 1) Install Codex CLI
 Option A (npm):
@@ -89,16 +161,8 @@ codex
 ```
 Then sign in with ChatGPT account or API key when prompted.
 
-### 3) Manage MCP servers from Codex CLI
-View servers:
-```bash
-codex mcp list
-```
-
-Add Docker MCP Gateway:
-```bash
-codex mcp add gateway --url http://localhost:8090
-```
+### 3) Connect to MCP Gateway
+Use the commands in `How -> 3) Setup Codex client`.
 
 ## References
 - https://developers.openai.com/codex/quickstart/#setup
