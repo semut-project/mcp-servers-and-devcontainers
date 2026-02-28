@@ -1,0 +1,10 @@
+interface:
+  display_name: "Gateway Server Microsoft Learn"
+  short_description: "Search official Microsoft docs"
+  default_prompt: "Use the microsoft-learn MCP server for this task and report concise operational steps."
+
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "microsoft-learn"
+      description: "Gateway Server Microsoft Learn MCP server"

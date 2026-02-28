@@ -1,0 +1,10 @@
+interface:
+  display_name: "Gateway Server Puppeteer"
+  short_description: "Automate browser actions via Puppeteer MCP"
+  default_prompt: "Use the puppeteer MCP server for this task and report concise operational steps."
+
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "puppeteer"
+      description: "Gateway Server Puppeteer MCP server"

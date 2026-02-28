@@ -1,0 +1,10 @@
+interface:
+  display_name: "Gateway Server AWS Diagram"
+  short_description: "Design AWS diagrams through MCP"
+  default_prompt: "Use the aws-diagram-mcp-server MCP server for this task and report concise operational steps."
+
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "aws-diagram-mcp-server"
+      description: "Gateway Server AWS Diagram MCP server"

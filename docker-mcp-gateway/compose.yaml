@@ -1,17 +1,13 @@
 services:
-  gateway:
-    image: docker/mcp-gateway
+  mcp-gateway:
+    image: docker/mcp-gateway:latest
     command:
       - --transport=streaming
       - --port=8090
-      - --servers=puppeteer,context7
-      - --verbose=false
+      - --servers=puppeteer,context7,playwright,aws-diagram-mcp-server,memory-reference,javadocs,markitdown,ffmpeg,hugging-face,microsoft-learn,paper-search 
     environment:
-      # Useful when you run this outside Docker Desktop (Docker Engine / Linux / WSL2),
-      # to bypass “Docker Desktop is not running” checks.
       - DOCKER_MCP_IN_CONTAINER=1
     volumes:
-      # Required: lets the gateway start/stop MCP server containers on the host
       - /var/run/docker.sock:/var/run/docker.sock
     ports:
       - "8090:8090"

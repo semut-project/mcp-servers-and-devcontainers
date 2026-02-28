@@ -1,0 +1,10 @@
+interface:
+  display_name: "Gateway Server Paper Search"
+  short_description: "Find and inspect research papers"
+  default_prompt: "Use the paper-search MCP server for this task and report concise operational steps."
+
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "paper-search"
+      description: "Gateway Server Paper Search MCP server"
