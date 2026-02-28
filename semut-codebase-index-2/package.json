@@ -1,0 +1,40 @@
+{
+  "name": "semut-indexing-mcp",
+  "version": "1.0.1",
+  "description": "MCP server for indexing codebases using Ollama embeddings and Qdrant vector database",
+  "main": "codebase-mcp.js",
+  "bin": {
+    "semut-indexing-mcp": "codebase-mcp.js"
+  },
+  "scripts": {
+    "start": "node codebase-mcp.js",
+    "test": "jest",
+    "dev": "node --watch codebase-mcp.js",
+    "build": "echo 'No build needed for this Node.js project, use npm run start'"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.17.4",
+    "@qdrant/js-client-rest": "^1.15.1",
+    "chokidar": "^4.0.3",
+    "ignore": "^7.0.5",
+    "node-fetch": "^3.3.2",
+    "winston": "^3.17.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.28.3",
+    "@babel/preset-env": "^7.28.3",
+    "babel-jest": "^30.1.1",
+    "jest": "^30.1.1"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "transform": {
+      "^.+\\.js$": "babel-jest"
+    },
+    "transformIgnorePatterns": []
+  },
+  "type": "module",
+  "engines": {
+    "node": ">=22.0.0"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "semut-codebase-index": {
+      "command": "node",
+      "args": [
+        "C:/PRJDENTSU/MY-MCP-SERVERS/semut-codebase-index-2/codebase-mcp.js"
+      ],
+      "cwd": "C:/PRJDENTSU/MY-MCP-SERVERS/semut-codebase-index-2",
+      "alwaysAllow": []
+    }
+  }
+}

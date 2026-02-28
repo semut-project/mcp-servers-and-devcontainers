@@ -1,0 +1,18 @@
+{
+  "directory": "./src", 
+  "allowedExtensions": [
+    ".js", ".ts", ".jsx", ".tsx",
+    ".py", ".java", ".go", ".rs",
+    ".cpp", ".c", ".h", ".hpp",
+    ".cs", ".php", ".rb",
+    ".html", ".css", ".scss", ".md", ".json", ".yml", ".yaml"
+  ],
+  "maxFileSizeBytes": 1048576, 
+  "ignore": [
+    "node_modules",
+    "dist",
+    "build",
+    "*.log",
+    "*.lock"
+  ]
+}
