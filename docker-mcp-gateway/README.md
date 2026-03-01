@@ -42,8 +42,34 @@ Check startup logs:
 docker compose logs --tail=100 mcp-gateway
 ```
 
-### 3) Setup Codex client
-Install Codex CLI (choose one):
+### 3) Verification
+
+#### Windows and WSL
+
+Endpoint check. Expected no error.
+```
+# From windows or WSL
+$ curl  -v --max-time 5 http://localhost:8090/mcp
+...
+< HTTP/1.1 400 Bad Request
+```
+
+#### Container
+If your AI client in container then check the following.
+
+```
+#from container
+curl -v --max-time 5 http://mcp-gateway:8090/mcp
+...
+< HTTP/1.1 400 Bad Request
+
+```
+
+See [Network problem in Container]()
+
+### 4) Setup Codex client
+
+#### Install Codex CLI
 
 Option A (npm):
 ```bash
@@ -55,24 +81,25 @@ Option B (Homebrew):
 brew install codex
 ```
 
-Login:
-```bash
-codex
-```
-Then sign in with ChatGPT account or API key when prompted.
+#### Connect Codex client to MCP Gateway
 
-Connect Codex client to MCP Gateway:
+##### Windows / WSL host
 ```bash
 codex mcp list
 codex mcp add gateway --url http://localhost:8090
-
-# OR from docker container
-codex mcp add gateway --url http://host.docker.internal:8090
 ```
 
+
+##### Docker Container
+
+```
+codex mcp add gateway --url http://mcp-gateway:8090
+```
+
+#### Install Skill
 Create global links for all local gateway skills.
 
-WSL/Linux:
+##### Host WSL/Linux:
 ```bash
 mkdir -p ~/.codex/skills
 for d in .codex/skills/*; do
@@ -81,7 +108,7 @@ for d in .codex/skills/*; do
 done
 ```
 
-Windows (PowerShell):
+##### Host Windows (PowerShell):
 ```powershell
 $repoSkills = Join-Path (Get-Location) ".codex\skills"
 $globalSkills = Join-Path $HOME ".codex\skills"
@@ -94,17 +121,14 @@ Get-ChildItem $repoSkills -Directory | ForEach-Object {
 }
 ```
 
-### 4) Verification
+##### Client Dev Container.
 
-Endpoint check. Expected no error.
-```
-# From windows or WSL
-curl -i http://localhost:8090
+I try to find a better way to setup SKILL in the client. See spec/001-discovery
+For now, you need to copy manually to your workspace in dev Container.
 
-#from container
-curl -i http://host.docker.internal:8090
+> Copy .codex/ from DOCKER-MCP-GATEWAY repo to your workspace.
 
-```
+##### Verification
 
 List all MCP Tools available in MCP Gateway.
 
@@ -183,3 +207,29 @@ Use the commands in `How -> 3) Setup Codex client`.
 ## References
 - https://developers.openai.com/codex/quickstart/#setup
 - https://developers.openai.com/codex/cli/reference/#codex-mcp
+
+
+# Most Common Problem
+
+## Network problem in Container
+
+check IP
+```
+getent hosts mcp-gateway
+172.21.0.2      mcp-gateway
+```
+
+check Network
+```
+docker network ls
+...
+0d160741bf23   docker-mcp-gateway_default               bridge    local
+...
+```
+
+check `devContainer.json`
+Check for network configuration
+
+```json
+"runArgs": ["--network=docker-mcp-gateway_default"],
+```
