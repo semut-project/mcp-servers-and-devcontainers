@@ -96,6 +96,16 @@ Get-ChildItem $repoSkills -Directory | ForEach-Object {
 
 ### 4) Verification
 
+Endpoint check. Expected no error.
+```
+# From windows or WSL
+curl -i http://localhost:8090
+
+#from container
+curl -i http://host.docker.internal:8090
+
+```
+
 List all MCP Tools available in MCP Gateway.
 
 ```bash
