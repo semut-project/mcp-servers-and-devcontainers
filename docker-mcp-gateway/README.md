@@ -16,6 +16,9 @@ Current setup in `compose.yaml`:
 - Port: `8090`
 - Enabled servers: `puppeteer,context7`
 
+Behavior:
+- restart unless-stopped. If failure is happen, this compose will restart unless manually stop
+
 ## How
 
 ### 1) Clone this repo
@@ -62,6 +65,9 @@ Connect Codex client to MCP Gateway:
 ```bash
 codex mcp list
 codex mcp add gateway --url http://localhost:8090
+
+# OR from docker container
+codex mcp add gateway --url http://host.docker.internal:8090
 ```
 
 Create global links for all local gateway skills.
